@@ -3,6 +3,8 @@
 ### Lemon = u"\U0001F34B"
 ### Bell = u"\U0001F514"
 ### Fire = u"\U0001F525"
+### spinning = u"\U0001F3B0"
+
 
 import os
 import random
@@ -58,7 +60,7 @@ def spin():
             print("You are out of money! See you next time.")
             quit()
     else:
-        print("Spinning...")
+        print(u"\U0001F3B0" + "  Spinning... " + u"\U0001F3B0")
         time.sleep(1)
         reel_1 = random.randrange(1, 11)
         reel_2 = random.randrange(1, 11)
@@ -140,22 +142,27 @@ def playagain():
     global wallet
     respin = ''
     rebet = ''
-    print("You currently have $" + str(wallet))
-    respin = input("Spin again with the same bet? Y/N? ")
-    if respin.lower() == 'y' or respin.lower() == 'yes':
-        spin()
-    elif respin.lower() == 'n' or respin.lower() == 'no':
-        rebet = input("Would you like play again with a different bet? Y/N? ")
-        if rebet.lower() == 'y' or rebet.lower() == 'yes':
-            bet()
-        elif rebet.lower() == 'n' or rebet.lower() == 'no':
-            print("You finished with $" + str(wallet))
-            print("See you next time!")
+    if wallet < .25:
+        print("You don't have enough money to play again!")
+        print("See you next time!")
+        quit()
+    else:
+        print("You currently have $" + str(wallet))
+        respin = input("Spin again with the same bet? Y/N? ")
+        if respin.lower() == 'y' or respin.lower() == 'yes':
+            spin()
+        elif respin.lower() == 'n' or respin.lower() == 'no':
+            rebet = input("Would you like play again with a different bet? Y/N? ")
+            if rebet.lower() == 'y' or rebet.lower() == 'yes':
+                bet()
+            elif rebet.lower() == 'n' or rebet.lower() == 'no':
+                print("You finished with $" + str(wallet))
+                print("See you next time!")
+            else:
+                print("Sorry, that is an invalid entry. Please enter Y/N")
+                playagain()            
         else:
             print("Sorry, that is an invalid entry. Please enter Y/N")
-            playagain()            
-    else:
-        print("Sorry, that is an invalid entry. Please enter Y/N")
-        playagain()
+            playagain()
 
 bet()
